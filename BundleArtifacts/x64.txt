@@ -1,0 +1,2 @@
+MainPackage=C:\Kiosk\bin\x64\Debug\IntelligentKioskSample_1.0.1.0_x64_Debug.appx
+SymbolPackage=C:\Kiosk\AppPackages\IntelligentKioskSample_1.0.1.0_Debug_Test\IntelligentKioskSample_1.0.1.0_x64_Debug.appxsym

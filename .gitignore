@@ -1,0 +1,5 @@
+/AppPackages
+/.vs
+bin/
+obj/
+packages/
