@@ -365,7 +365,7 @@ namespace IntelligentKioskSample.Views
                         var name = "null";
                         var person = "";
                         System.Diagnostics.Debug.WriteLine("Identify? : " + lastIdentifiedPersonSample == null);
-                        if (null != lastIdentifiedPersonSample)
+                        if (null != lastIdentifiedPersonSample && null != lastIdentifiedPersonSample.First().Item2)
                         {
                             name = lastIdentifiedPersonSample.First().Item2.Person.Name.ToString();
                             person = lastIdentifiedPersonSample.First().Item2.Person.PersonId.ToString();
