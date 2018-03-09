@@ -7,6 +7,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     SizeChanged="OnPageSizeChanged"
+    xmlns:mediaManager="using:Plugin.MediaManager"
     mc:Ignorable="d">
 
         
@@ -33,7 +34,7 @@
         </Grid>
 
         <StackPanel Grid.Row="1">
-            <TextBlock Text="Realtime Crowd Insights Sample" Foreground="White" HorizontalAlignment="Center" FontFamily="Segoe UI Light" Style="{StaticResource HeaderTextBlockStyle}"/>
+            <TextBlock x:Name="realtimeTitleControl" Text="Realtime Crowd Insights Sample" Foreground="White" HorizontalAlignment="Center" FontFamily="Segoe UI Light" Style="{StaticResource HeaderTextBlockStyle}"/>
             <TextBlock Text="Deriving realtime crowd insights from age, gender, emotion, face identification and unique face tracking" HorizontalAlignment="Center" FontFamily="Segoe UI Light"  Style="{StaticResource SubtitleTextBlockStyle}" FontStyle="Italic"/>
         </StackPanel>
 

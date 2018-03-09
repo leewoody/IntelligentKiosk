@@ -41,11 +41,17 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 using Windows.Graphics.Imaging;
+using Windows.UI.Core;
 using Windows.UI.Popups;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
+using Windows.UI.Xaml.Media;
+using Plugin.MediaManager;
+using Plugin.MediaManager.Abstractions.Enums;
+using Plugin.MediaManager.Abstractions.EventArguments;
+using Plugin.MediaManager.Abstractions.Implementations;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -369,7 +375,11 @@ namespace IntelligentKioskSample.Views
                         {
                             name = lastIdentifiedPersonSample.First().Item2.Person.Name.ToString();
                             person = lastIdentifiedPersonSample.First().Item2.Person.PersonId.ToString();
+                            //realtimeTitleControl.Text = name;
+                            //doMarquee();
+                
                         }
+
                         System.Diagnostics.Debug.WriteLine("Name: " + name);
                         System.Diagnostics.Debug.WriteLine("ID: " + person);
                         foreach (KeyValuePair<string, string> entry in dictionary)
@@ -379,6 +389,7 @@ namespace IntelligentKioskSample.Views
                         }
                         dictionary["personid"] = person;
                         dictionary["personname"] = name;
+                        //realtimeTitleControl.Text = name;
                         ////#pragma warning disable 4014
                         String str = SettingsHelper.Instance.IoTHubConnectString;
                         await IoTClient.Start(dictionary, SettingsHelper.Instance.IoTHubConnectString);
@@ -478,6 +489,10 @@ namespace IntelligentKioskSample.Views
                                                .OrderBy(f => Math.Abs(faceBox.X - f.Item1.FaceRectangle.Left) + Math.Abs(faceBox.Y - f.Item1.FaceRectangle.Top)).FirstOrDefault();
             if (match != null)
             {
+                if (null != match.Item2)
+                {
+                    realtimeTitleControl.Text = match.Item2.Person.Name.ToString();
+                }
                 return match.Item2;
             }
 
@@ -496,6 +511,11 @@ namespace IntelligentKioskSample.Views
                                                .OrderBy(f => Math.Abs(faceBox.X - f.Face.FaceRectangle.Left) + Math.Abs(faceBox.Y - f.Face.FaceRectangle.Top)).FirstOrDefault();
 
             return match?.SimilarPersistedFace;
+        }
+
+        private void TextBlock_SelectionChanged(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 
