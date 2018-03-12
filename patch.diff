@@ -1,0 +1,187 @@
+diff --git a/IntelligentKioskSample.csproj b/IntelligentKioskSample.csproj
+index 4dc95ad..b8e4ac7 100644
+--- a/IntelligentKioskSample.csproj
++++ b/IntelligentKioskSample.csproj
+@@ -494,6 +494,12 @@
+     <PackageReference Include="Newtonsoft.Json">
+       <Version>9.0.1</Version>
+     </PackageReference>
++    <PackageReference Include="Plugin.MediaManager">
++      <Version>0.4.5</Version>
++    </PackageReference>
++    <PackageReference Include="Plugin.MediaManager.Forms">
++      <Version>0.4.5</Version>
++    </PackageReference>
+     <PackageReference Include="WriteableBitmapEx">
+       <Version>1.5.0</Version>
+     </PackageReference>
+diff --git a/KioskRuntimeComponent/project.json b/KioskRuntimeComponent/project.json
+index 92d1456..82d434e 100644
+--- a/KioskRuntimeComponent/project.json
++++ b/KioskRuntimeComponent/project.json
+@@ -1,9 +1,11 @@
+ ﻿{
+   "dependencies": {
+-    "Microsoft.NETCore.UniversalWindowsPlatform": "5.1.0"
++    "Microsoft.NETCore.UniversalWindowsPlatform": "5.1.0",
++    "Plugin.MediaManager": "0.4.5",
++    "Plugin.MediaManager.Forms": "0.4.5"
+   },
+   "frameworks": {
+-    "uap10.0": {}
++    "uap10.0.15063": {}
+   },
+   "runtimes": {
+     "win10-arm": {},
+diff --git a/ServiceHelpers/ServiceHelpers.csproj b/ServiceHelpers/ServiceHelpers.csproj
+index f2a0bc9..97a6a91 100644
+--- a/ServiceHelpers/ServiceHelpers.csproj
++++ b/ServiceHelpers/ServiceHelpers.csproj
+@@ -63,6 +63,15 @@
+     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+       <HintPath>..\packages\Newtonsoft.Json.10.0.2\lib\portable-net45+win8+wpa81+wp8\Newtonsoft.Json.dll</HintPath>
+     </Reference>
++    <Reference Include="Plugin.MediaManager, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
++      <HintPath>..\packages\Plugin.MediaManager.0.4.5\lib\portable-net45+wp8+wpa81+win8+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Plugin.MediaManager.dll</HintPath>
++    </Reference>
++    <Reference Include="Plugin.MediaManager.Abstractions, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
++      <HintPath>..\packages\Plugin.MediaManager.0.4.5\lib\portable-net45+wp8+wpa81+win8+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Plugin.MediaManager.Abstractions.dll</HintPath>
++    </Reference>
++    <Reference Include="Plugin.MediaManager.Forms, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
++      <HintPath>..\packages\Plugin.MediaManager.Forms.0.4.5\lib\portable-net45+wp8+wpa81+win8+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Plugin.MediaManager.Forms.dll</HintPath>
++    </Reference>
+     <Reference Include="System.Net.Http.Extensions, Version=2.2.29.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+       <HintPath>..\packages\Microsoft.Net.Http.2.2.29\lib\portable-net45+win8\System.Net.Http.Extensions.dll</HintPath>
+       <Private>True</Private>
+@@ -71,6 +80,15 @@
+       <HintPath>..\packages\Microsoft.Net.Http.2.2.29\lib\portable-net45+win8\System.Net.Http.Primitives.dll</HintPath>
+       <Private>True</Private>
+     </Reference>
++    <Reference Include="Xamarin.Forms.Core, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
++      <HintPath>..\packages\Xamarin.Forms.2.3.4.247\lib\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.Core.dll</HintPath>
++    </Reference>
++    <Reference Include="Xamarin.Forms.Platform, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
++      <HintPath>..\packages\Xamarin.Forms.2.3.4.247\lib\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.Platform.dll</HintPath>
++    </Reference>
++    <Reference Include="Xamarin.Forms.Xaml, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
++      <HintPath>..\packages\Xamarin.Forms.2.3.4.247\lib\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.Xaml.dll</HintPath>
++    </Reference>
+   </ItemGroup>
+   <ItemGroup>
+     <None Include="app.config" />
+@@ -85,7 +103,9 @@
+       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+     </PropertyGroup>
+     <Error Condition="!Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets'))" />
++    <Error Condition="!Exists('..\packages\Xamarin.Forms.2.3.4.247\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Xamarin.Forms.2.3.4.247\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets'))" />
+   </Target>
++  <Import Project="..\packages\Xamarin.Forms.2.3.4.247\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets" Condition="Exists('..\packages\Xamarin.Forms.2.3.4.247\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets')" />
+   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+        Other similar extension points exist, see Microsoft.Common.targets.
+   <Target Name="BeforeBuild">
+diff --git a/ServiceHelpers/packages.config b/ServiceHelpers/packages.config
+index cbd2c24..7c1694d 100644
+--- a/ServiceHelpers/packages.config
++++ b/ServiceHelpers/packages.config
+@@ -10,6 +10,8 @@
+   <package id="Microsoft.ProjectOxford.Vision" version="1.0.372" targetFramework="portable45-net45+win8" />
+   <package id="NETStandard.Library" version="1.6.1" targetFramework="portable45-net45+win8" />
+   <package id="Newtonsoft.Json" version="10.0.2" targetFramework="portable45-net45+win8" />
++  <package id="Plugin.MediaManager" version="0.4.5" targetFramework="portable45-net45+win8" />
++  <package id="Plugin.MediaManager.Forms" version="0.4.5" targetFramework="portable45-net45+win8" />
+   <package id="runtime.native.System" version="4.3.0" targetFramework="portable45-net45+win8" />
+   <package id="System.Collections" version="4.3.0" targetFramework="portable45-net45+win8" />
+   <package id="System.Collections.Concurrent" version="4.3.0" targetFramework="portable45-net45+win8" />
+@@ -40,4 +42,5 @@
+   <package id="System.Threading.Tasks" version="4.3.0" targetFramework="portable45-net45+win8" />
+   <package id="System.Xml.ReaderWriter" version="4.3.0" targetFramework="portable45-net45+win8" />
+   <package id="System.Xml.XDocument" version="4.3.0" targetFramework="portable45-net45+win8" />
++  <package id="Xamarin.Forms" version="2.3.4.247" targetFramework="portable45-net45+win8" />
+ </packages>
+\ No newline at end of file
+diff --git a/Views/RealTimeDemo.xaml b/Views/RealTimeDemo.xaml
+index 54928d4..2a3b228 100644
+--- a/Views/RealTimeDemo.xaml
++++ b/Views/RealTimeDemo.xaml
+@@ -7,6 +7,7 @@
+     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+     SizeChanged="OnPageSizeChanged"
++    xmlns:mediaManager="using:Plugin.MediaManager"
+     mc:Ignorable="d">
+ 
+         
+@@ -33,7 +34,7 @@
+         </Grid>
+ 
+         <StackPanel Grid.Row="1">
+-            <TextBlock Text="Realtime Crowd Insights Sample" Foreground="White" HorizontalAlignment="Center" FontFamily="Segoe UI Light" Style="{StaticResource HeaderTextBlockStyle}"/>
++            <TextBlock x:Name="realtimeTitleControl" Text="Realtime Crowd Insights Sample" Foreground="White" HorizontalAlignment="Center" FontFamily="Segoe UI Light" Style="{StaticResource HeaderTextBlockStyle}"/>
+             <TextBlock Text="Deriving realtime crowd insights from age, gender, emotion, face identification and unique face tracking" HorizontalAlignment="Center" FontFamily="Segoe UI Light"  Style="{StaticResource SubtitleTextBlockStyle}" FontStyle="Italic"/>
+         </StackPanel>
+ 
+diff --git a/Views/RealTimeDemo.xaml.cs b/Views/RealTimeDemo.xaml.cs
+index 13c1f04..51cdd47 100644
+--- a/Views/RealTimeDemo.xaml.cs
++++ b/Views/RealTimeDemo.xaml.cs
+@@ -41,11 +41,17 @@ using System.Linq;
+ using System.Threading.Tasks;
+ using System.Xml.Serialization;
+ using Windows.Graphics.Imaging;
++using Windows.UI.Core;
+ using Windows.UI.Popups;
+ using Windows.UI.ViewManagement;
+ using Windows.UI.Xaml;
+ using Windows.UI.Xaml.Controls;
+ using Windows.UI.Xaml.Navigation;
++using Windows.UI.Xaml.Media;
++using Plugin.MediaManager;
++using Plugin.MediaManager.Abstractions.Enums;
++using Plugin.MediaManager.Abstractions.EventArguments;
++using Plugin.MediaManager.Abstractions.Implementations;
+ 
+ // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
+ 
+@@ -369,7 +375,11 @@ namespace IntelligentKioskSample.Views
+                         {
+                             name = lastIdentifiedPersonSample.First().Item2.Person.Name.ToString();
+                             person = lastIdentifiedPersonSample.First().Item2.Person.PersonId.ToString();
++                            //realtimeTitleControl.Text = name;
++                            //doMarquee();
++                
+                         }
++
+                         System.Diagnostics.Debug.WriteLine("Name: " + name);
+                         System.Diagnostics.Debug.WriteLine("ID: " + person);
+                         foreach (KeyValuePair<string, string> entry in dictionary)
+@@ -379,6 +389,7 @@ namespace IntelligentKioskSample.Views
+                         }
+                         dictionary["personid"] = person;
+                         dictionary["personname"] = name;
++                        //realtimeTitleControl.Text = name;
+                         ////#pragma warning disable 4014
+                         String str = SettingsHelper.Instance.IoTHubConnectString;
+                         await IoTClient.Start(dictionary, SettingsHelper.Instance.IoTHubConnectString);
+@@ -478,6 +489,10 @@ namespace IntelligentKioskSample.Views
+                                                .OrderBy(f => Math.Abs(faceBox.X - f.Item1.FaceRectangle.Left) + Math.Abs(faceBox.Y - f.Item1.FaceRectangle.Top)).FirstOrDefault();
+             if (match != null)
+             {
++                if (null != match.Item2)
++                {
++                    realtimeTitleControl.Text = match.Item2.Person.Name.ToString();
++                }
+                 return match.Item2;
+             }
+ 
+@@ -497,6 +512,11 @@ namespace IntelligentKioskSample.Views
+ 
+             return match?.SimilarPersistedFace;
+         }
++
++        private void TextBlock_SelectionChanged(object sender, RoutedEventArgs e)
++        {
++
++        }
+     }
+ 
+     [XmlType]

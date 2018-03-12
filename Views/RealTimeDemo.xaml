@@ -10,18 +10,18 @@
     xmlns:mediaManager="using:Plugin.MediaManager"
     mc:Ignorable="d">
 
-        
+
     <Grid x:Name="MainGrid" 
-            EntranceNavigationTransitionInfo.IsTargetElement="True" Background="#FF262626">
+            EntranceNavigationTransitionInfo.IsTargetElement="True"  Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
         <Grid.RowDefinitions>
             <RowDefinition Height="0.02*" />
             <RowDefinition Height="auto" />
-            <RowDefinition Height="0.01*" />            
+            <RowDefinition Height="0.01*" />
             <RowDefinition />
-            <RowDefinition Height="0.01*" />                            
-            <RowDefinition Height="auto"/>                
-            <RowDefinition Height="0.05*" />            
+            <RowDefinition Height="0.01*" />
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="0.05*" />
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center">
@@ -34,21 +34,25 @@
         </Grid>
 
         <StackPanel Grid.Row="1">
-            <TextBlock x:Name="realtimeTitleControl" Text="Realtime Crowd Insights Sample" Foreground="White" HorizontalAlignment="Center" FontFamily="Segoe UI Light" Style="{StaticResource HeaderTextBlockStyle}"/>
+            <TextBlock x:Name="realtimeTitleControl" Text="幸福指數人流分析" Foreground="White" HorizontalAlignment="Center" FontFamily="Segoe UI Light" Style="{StaticResource HeaderTextBlockStyle}"/>
             <TextBlock Text="Deriving realtime crowd insights from age, gender, emotion, face identification and unique face tracking" HorizontalAlignment="Center" FontFamily="Segoe UI Light"  Style="{StaticResource SubtitleTextBlockStyle}" FontStyle="Italic"/>
         </StackPanel>
 
-        <Grid Grid.Row="5" Height="165">
+        <Grid Grid.Row="5" Height="180">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="0.1*"/>
+                <ColumnDefinition Width="0.01*"/>
                 <ColumnDefinition Width="300"/>
-                <ColumnDefinition Width="240"/>
+                <ColumnDefinition Width="180"/>
+                <ColumnDefinition Width="450"/>
                 <ColumnDefinition />
-                <ColumnDefinition Width="0.1*"/>
+                
             </Grid.ColumnDefinitions>
             <ctl:AgeGenderDistributionControl x:Name="ageGenderDistributionControl" HeaderText="Demographics" SubHeaderText="At this hour (erased hourly)" SubHeaderVisibility="Visible" Grid.Column="1" />
-            <ctl:OverallStatsControl x:Name="overallStatsControl" HeaderText="Total Faces" SubHeaderText="At this hour (erased hourly)" SubHeaderVisibility="Visible" Margin="24,0,24,0" Grid.Column="2" />
+            <ctl:OverallStatsControl x:Name="overallStatsControl" HeaderText="Total Faces" SubHeaderText="At this hour (erased hourly)" SubHeaderVisibility="Visible" Margin="10,0,10,0" Grid.Column="2" />
             <ctl:EmotionResponseTimelineControl Grid.Column="3" x:Name="emotionDataTimelineControl"  />
+            <StackPanel Orientation="Vertical" Grid.Column="4"  HorizontalAlignment="Center" VerticalAlignment="Center">
+                <mediaManager:VideoSurface Height="250" Width="550" x:Name="VideoCanvas"/>
+            </StackPanel>
         </Grid>
 
         <Grid Grid.Row="3" x:Name="initializingUI" Visibility="Collapsed">

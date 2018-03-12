@@ -1,0 +1,421 @@
+diff --git a/IntelligentKioskSample.csproj b/IntelligentKioskSample.csproj
+index b8e4ac7..2745d46 100644
+--- a/IntelligentKioskSample.csproj
++++ b/IntelligentKioskSample.csproj
+@@ -464,6 +464,14 @@
+       <Project>{fc5a0250-b742-40a8-82ca-bec2df66982f}</Project>
+       <Name>KioskRuntimeComponent</Name>
+     </ProjectReference>
++    <ProjectReference Include="MediaManager.Abstractions\Plugin.MediaManager.Abstractions.csproj">
++      <Project>{6edb0588-ffc5-4ef5-8a99-9e241d0f878d}</Project>
++      <Name>Plugin.MediaManager.Abstractions</Name>
++    </ProjectReference>
++    <ProjectReference Include="MediaManager.UWP\Plugin.MediaManager.UWP.csproj">
++      <Project>{e34b516d-c0d8-450f-9db0-bb6a5b04aef1}</Project>
++      <Name>Plugin.MediaManager.UWP</Name>
++    </ProjectReference>
+     <ProjectReference Include="ServiceHelpers\ServiceHelpers.csproj">
+       <Project>{5d9320af-a9e4-48e3-89bc-9f7f0954b298}</Project>
+       <Name>ServiceHelpers</Name>
+@@ -494,16 +502,11 @@
+     <PackageReference Include="Newtonsoft.Json">
+       <Version>9.0.1</Version>
+     </PackageReference>
+-    <PackageReference Include="Plugin.MediaManager">
+-      <Version>0.4.5</Version>
+-    </PackageReference>
+-    <PackageReference Include="Plugin.MediaManager.Forms">
+-      <Version>0.4.5</Version>
+-    </PackageReference>
+     <PackageReference Include="WriteableBitmapEx">
+       <Version>1.5.0</Version>
+     </PackageReference>
+   </ItemGroup>
++  <ItemGroup />
+   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
+     <VisualStudioVersion>14.0</VisualStudioVersion>
+   </PropertyGroup>
+diff --git a/IntelligentKioskSample.sln b/IntelligentKioskSample.sln
+index 4a0bee7..4a7f8a7 100644
+--- a/IntelligentKioskSample.sln
++++ b/IntelligentKioskSample.sln
+@@ -1,14 +1,26 @@
+ ﻿
+ Microsoft Visual Studio Solution File, Format Version 12.00
+-# Visual Studio 14
+-VisualStudioVersion = 14.0.25420.1
++# Visual Studio 15
++VisualStudioVersion = 15.0.27130.2036
+ MinimumVisualStudioVersion = 10.0.40219.1
+ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntelligentKioskSample", "IntelligentKioskSample.csproj", "{B08D337A-AF9F-4705-B8C1-C7F07FACD8C5}"
++	ProjectSection(ProjectDependencies) = postProject
++		{E34B516D-C0D8-450F-9DB0-BB6A5B04AEF1} = {E34B516D-C0D8-450F-9DB0-BB6A5B04AEF1}
++		{6EDB0588-FFC5-4EF5-8A99-9E241D0F878D} = {6EDB0588-FFC5-4EF5-8A99-9E241D0F878D}
++	EndProjectSection
+ EndProject
+ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceHelpers", "ServiceHelpers\ServiceHelpers.csproj", "{5D9320AF-A9E4-48E3-89BC-9F7F0954B298}"
+ EndProject
+ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KioskRuntimeComponent", "KioskRuntimeComponent\KioskRuntimeComponent.csproj", "{FC5A0250-B742-40A8-82CA-BEC2DF66982F}"
+ EndProject
++Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plugin.MediaManager.Abstractions", "MediaManager.Abstractions\Plugin.MediaManager.Abstractions.csproj", "{6EDB0588-FFC5-4EF5-8A99-9E241D0F878D}"
++EndProject
++Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plugin.MediaManager.UWP", "MediaManager.UWP\Plugin.MediaManager.UWP.csproj", "{E34B516D-C0D8-450F-9DB0-BB6A5B04AEF1}"
++EndProject
++Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plugin.MediaManager", "MediaManager\Plugin.MediaManager.csproj", "{A6FCEF44-D2BA-42C7-B3CB-13667BCD7B54}"
++EndProject
++Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plugin.MediaManager.Reactive", "MediaManager.Reactive\Plugin.MediaManager.Reactive.csproj", "{DB2BAFBA-2A85-4E9B-8E9D-0A607A661E84}"
++EndProject
+ Global
+ 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+ 		CNDebug|Any CPU = CNDebug|Any CPU
+@@ -107,8 +119,107 @@ Global
+ 		{FC5A0250-B742-40A8-82CA-BEC2DF66982F}.Release|x64.Build.0 = Release|x64
+ 		{FC5A0250-B742-40A8-82CA-BEC2DF66982F}.Release|x86.ActiveCfg = Release|x86
+ 		{FC5A0250-B742-40A8-82CA-BEC2DF66982F}.Release|x86.Build.0 = Release|x86
++		{6EDB0588-FFC5-4EF5-8A99-9E241D0F878D}.CNDebug|Any CPU.ActiveCfg = Debug|Any CPU
++		{6EDB0588-FFC5-4EF5-8A99-9E241D0F878D}.CNDebug|Any CPU.Build.0 = Debug|Any CPU
++		{6EDB0588-FFC5-4EF5-8A99-9E241D0F878D}.CNDebug|ARM.ActiveCfg = Debug|Any CPU
++		{6EDB0588-FFC5-4EF5-8A99-9E241D0F878D}.CNDebug|ARM.Build.0 = Debug|Any CPU
++		{6EDB0588-FFC5-4EF5-8A99-9E241D0F878D}.CNDebug|x64.ActiveCfg = Debug|Any CPU
++		{6EDB0588-FFC5-4EF5-8A99-9E241D0F878D}.CNDebug|x64.Build.0 = Debug|Any CPU
++		{6EDB0588-FFC5-4EF5-8A99-9E241D0F878D}.CNDebug|x86.ActiveCfg = Debug|Any CPU
++		{6EDB0588-FFC5-4EF5-8A99-9E241D0F878D}.CNDebug|x86.Build.0 = Debug|Any CPU
++		{6EDB0588-FFC5-4EF5-8A99-9E241D0F878D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
++		{6EDB0588-FFC5-4EF5-8A99-9E241D0F878D}.Debug|Any CPU.Build.0 = Debug|Any CPU
++		{6EDB0588-FFC5-4EF5-8A99-9E241D0F878D}.Debug|ARM.ActiveCfg = Debug|Any CPU
++		{6EDB0588-FFC5-4EF5-8A99-9E241D0F878D}.Debug|ARM.Build.0 = Debug|Any CPU
++		{6EDB0588-FFC5-4EF5-8A99-9E241D0F878D}.Debug|x64.ActiveCfg = Debug|Any CPU
++		{6EDB0588-FFC5-4EF5-8A99-9E241D0F878D}.Debug|x64.Build.0 = Debug|Any CPU
++		{6EDB0588-FFC5-4EF5-8A99-9E241D0F878D}.Debug|x86.ActiveCfg = Debug|Any CPU
++		{6EDB0588-FFC5-4EF5-8A99-9E241D0F878D}.Debug|x86.Build.0 = Debug|Any CPU
++		{6EDB0588-FFC5-4EF5-8A99-9E241D0F878D}.Release|Any CPU.ActiveCfg = Release|Any CPU
++		{6EDB0588-FFC5-4EF5-8A99-9E241D0F878D}.Release|Any CPU.Build.0 = Release|Any CPU
++		{6EDB0588-FFC5-4EF5-8A99-9E241D0F878D}.Release|ARM.ActiveCfg = Release|Any CPU
++		{6EDB0588-FFC5-4EF5-8A99-9E241D0F878D}.Release|ARM.Build.0 = Release|Any CPU
++		{6EDB0588-FFC5-4EF5-8A99-9E241D0F878D}.Release|x64.ActiveCfg = Release|Any CPU
++		{6EDB0588-FFC5-4EF5-8A99-9E241D0F878D}.Release|x64.Build.0 = Release|Any CPU
++		{6EDB0588-FFC5-4EF5-8A99-9E241D0F878D}.Release|x86.ActiveCfg = Release|Any CPU
++		{6EDB0588-FFC5-4EF5-8A99-9E241D0F878D}.Release|x86.Build.0 = Release|Any CPU
++		{E34B516D-C0D8-450F-9DB0-BB6A5B04AEF1}.CNDebug|Any CPU.ActiveCfg = Debug|Any CPU
++		{E34B516D-C0D8-450F-9DB0-BB6A5B04AEF1}.CNDebug|Any CPU.Build.0 = Debug|Any CPU
++		{E34B516D-C0D8-450F-9DB0-BB6A5B04AEF1}.CNDebug|ARM.ActiveCfg = Debug|ARM
++		{E34B516D-C0D8-450F-9DB0-BB6A5B04AEF1}.CNDebug|ARM.Build.0 = Debug|ARM
++		{E34B516D-C0D8-450F-9DB0-BB6A5B04AEF1}.CNDebug|x64.ActiveCfg = Debug|x64
++		{E34B516D-C0D8-450F-9DB0-BB6A5B04AEF1}.CNDebug|x64.Build.0 = Debug|x64
++		{E34B516D-C0D8-450F-9DB0-BB6A5B04AEF1}.CNDebug|x86.ActiveCfg = Debug|x86
++		{E34B516D-C0D8-450F-9DB0-BB6A5B04AEF1}.CNDebug|x86.Build.0 = Debug|x86
++		{E34B516D-C0D8-450F-9DB0-BB6A5B04AEF1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
++		{E34B516D-C0D8-450F-9DB0-BB6A5B04AEF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
++		{E34B516D-C0D8-450F-9DB0-BB6A5B04AEF1}.Debug|ARM.ActiveCfg = Debug|ARM
++		{E34B516D-C0D8-450F-9DB0-BB6A5B04AEF1}.Debug|ARM.Build.0 = Debug|ARM
++		{E34B516D-C0D8-450F-9DB0-BB6A5B04AEF1}.Debug|x64.ActiveCfg = Debug|x64
++		{E34B516D-C0D8-450F-9DB0-BB6A5B04AEF1}.Debug|x64.Build.0 = Debug|x64
++		{E34B516D-C0D8-450F-9DB0-BB6A5B04AEF1}.Debug|x86.ActiveCfg = Debug|x86
++		{E34B516D-C0D8-450F-9DB0-BB6A5B04AEF1}.Debug|x86.Build.0 = Debug|x86
++		{E34B516D-C0D8-450F-9DB0-BB6A5B04AEF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
++		{E34B516D-C0D8-450F-9DB0-BB6A5B04AEF1}.Release|Any CPU.Build.0 = Release|Any CPU
++		{E34B516D-C0D8-450F-9DB0-BB6A5B04AEF1}.Release|ARM.ActiveCfg = Release|ARM
++		{E34B516D-C0D8-450F-9DB0-BB6A5B04AEF1}.Release|ARM.Build.0 = Release|ARM
++		{E34B516D-C0D8-450F-9DB0-BB6A5B04AEF1}.Release|x64.ActiveCfg = Release|x64
++		{E34B516D-C0D8-450F-9DB0-BB6A5B04AEF1}.Release|x64.Build.0 = Release|x64
++		{E34B516D-C0D8-450F-9DB0-BB6A5B04AEF1}.Release|x86.ActiveCfg = Release|x86
++		{E34B516D-C0D8-450F-9DB0-BB6A5B04AEF1}.Release|x86.Build.0 = Release|x86
++		{A6FCEF44-D2BA-42C7-B3CB-13667BCD7B54}.CNDebug|Any CPU.ActiveCfg = Debug|Any CPU
++		{A6FCEF44-D2BA-42C7-B3CB-13667BCD7B54}.CNDebug|Any CPU.Build.0 = Debug|Any CPU
++		{A6FCEF44-D2BA-42C7-B3CB-13667BCD7B54}.CNDebug|ARM.ActiveCfg = Debug|Any CPU
++		{A6FCEF44-D2BA-42C7-B3CB-13667BCD7B54}.CNDebug|ARM.Build.0 = Debug|Any CPU
++		{A6FCEF44-D2BA-42C7-B3CB-13667BCD7B54}.CNDebug|x64.ActiveCfg = Debug|Any CPU
++		{A6FCEF44-D2BA-42C7-B3CB-13667BCD7B54}.CNDebug|x64.Build.0 = Debug|Any CPU
++		{A6FCEF44-D2BA-42C7-B3CB-13667BCD7B54}.CNDebug|x86.ActiveCfg = Debug|Any CPU
++		{A6FCEF44-D2BA-42C7-B3CB-13667BCD7B54}.CNDebug|x86.Build.0 = Debug|Any CPU
++		{A6FCEF44-D2BA-42C7-B3CB-13667BCD7B54}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
++		{A6FCEF44-D2BA-42C7-B3CB-13667BCD7B54}.Debug|Any CPU.Build.0 = Debug|Any CPU
++		{A6FCEF44-D2BA-42C7-B3CB-13667BCD7B54}.Debug|ARM.ActiveCfg = Debug|Any CPU
++		{A6FCEF44-D2BA-42C7-B3CB-13667BCD7B54}.Debug|ARM.Build.0 = Debug|Any CPU
++		{A6FCEF44-D2BA-42C7-B3CB-13667BCD7B54}.Debug|x64.ActiveCfg = Debug|Any CPU
++		{A6FCEF44-D2BA-42C7-B3CB-13667BCD7B54}.Debug|x64.Build.0 = Debug|Any CPU
++		{A6FCEF44-D2BA-42C7-B3CB-13667BCD7B54}.Debug|x86.ActiveCfg = Debug|Any CPU
++		{A6FCEF44-D2BA-42C7-B3CB-13667BCD7B54}.Debug|x86.Build.0 = Debug|Any CPU
++		{A6FCEF44-D2BA-42C7-B3CB-13667BCD7B54}.Release|Any CPU.ActiveCfg = Release|Any CPU
++		{A6FCEF44-D2BA-42C7-B3CB-13667BCD7B54}.Release|Any CPU.Build.0 = Release|Any CPU
++		{A6FCEF44-D2BA-42C7-B3CB-13667BCD7B54}.Release|ARM.ActiveCfg = Release|Any CPU
++		{A6FCEF44-D2BA-42C7-B3CB-13667BCD7B54}.Release|ARM.Build.0 = Release|Any CPU
++		{A6FCEF44-D2BA-42C7-B3CB-13667BCD7B54}.Release|x64.ActiveCfg = Release|Any CPU
++		{A6FCEF44-D2BA-42C7-B3CB-13667BCD7B54}.Release|x64.Build.0 = Release|Any CPU
++		{A6FCEF44-D2BA-42C7-B3CB-13667BCD7B54}.Release|x86.ActiveCfg = Release|Any CPU
++		{A6FCEF44-D2BA-42C7-B3CB-13667BCD7B54}.Release|x86.Build.0 = Release|Any CPU
++		{DB2BAFBA-2A85-4E9B-8E9D-0A607A661E84}.CNDebug|Any CPU.ActiveCfg = Debug|Any CPU
++		{DB2BAFBA-2A85-4E9B-8E9D-0A607A661E84}.CNDebug|Any CPU.Build.0 = Debug|Any CPU
++		{DB2BAFBA-2A85-4E9B-8E9D-0A607A661E84}.CNDebug|ARM.ActiveCfg = Debug|Any CPU
++		{DB2BAFBA-2A85-4E9B-8E9D-0A607A661E84}.CNDebug|ARM.Build.0 = Debug|Any CPU
++		{DB2BAFBA-2A85-4E9B-8E9D-0A607A661E84}.CNDebug|x64.ActiveCfg = Debug|Any CPU
++		{DB2BAFBA-2A85-4E9B-8E9D-0A607A661E84}.CNDebug|x64.Build.0 = Debug|Any CPU
++		{DB2BAFBA-2A85-4E9B-8E9D-0A607A661E84}.CNDebug|x86.ActiveCfg = Debug|Any CPU
++		{DB2BAFBA-2A85-4E9B-8E9D-0A607A661E84}.CNDebug|x86.Build.0 = Debug|Any CPU
++		{DB2BAFBA-2A85-4E9B-8E9D-0A607A661E84}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
++		{DB2BAFBA-2A85-4E9B-8E9D-0A607A661E84}.Debug|Any CPU.Build.0 = Debug|Any CPU
++		{DB2BAFBA-2A85-4E9B-8E9D-0A607A661E84}.Debug|ARM.ActiveCfg = Debug|Any CPU
++		{DB2BAFBA-2A85-4E9B-8E9D-0A607A661E84}.Debug|ARM.Build.0 = Debug|Any CPU
++		{DB2BAFBA-2A85-4E9B-8E9D-0A607A661E84}.Debug|x64.ActiveCfg = Debug|Any CPU
++		{DB2BAFBA-2A85-4E9B-8E9D-0A607A661E84}.Debug|x64.Build.0 = Debug|Any CPU
++		{DB2BAFBA-2A85-4E9B-8E9D-0A607A661E84}.Debug|x86.ActiveCfg = Debug|Any CPU
++		{DB2BAFBA-2A85-4E9B-8E9D-0A607A661E84}.Debug|x86.Build.0 = Debug|Any CPU
++		{DB2BAFBA-2A85-4E9B-8E9D-0A607A661E84}.Release|Any CPU.ActiveCfg = Release|Any CPU
++		{DB2BAFBA-2A85-4E9B-8E9D-0A607A661E84}.Release|Any CPU.Build.0 = Release|Any CPU
++		{DB2BAFBA-2A85-4E9B-8E9D-0A607A661E84}.Release|ARM.ActiveCfg = Release|Any CPU
++		{DB2BAFBA-2A85-4E9B-8E9D-0A607A661E84}.Release|ARM.Build.0 = Release|Any CPU
++		{DB2BAFBA-2A85-4E9B-8E9D-0A607A661E84}.Release|x64.ActiveCfg = Release|Any CPU
++		{DB2BAFBA-2A85-4E9B-8E9D-0A607A661E84}.Release|x64.Build.0 = Release|Any CPU
++		{DB2BAFBA-2A85-4E9B-8E9D-0A607A661E84}.Release|x86.ActiveCfg = Release|Any CPU
++		{DB2BAFBA-2A85-4E9B-8E9D-0A607A661E84}.Release|x86.Build.0 = Release|Any CPU
+ 	EndGlobalSection
+ 	GlobalSection(SolutionProperties) = preSolution
+ 		HideSolutionNode = FALSE
+ 	EndGlobalSection
++	GlobalSection(ExtensibilityGlobals) = postSolution
++		SolutionGuid = {D5F2EBF5-AA07-413E-86A9-84BC78987AD2}
++	EndGlobalSection
+ EndGlobal
+diff --git a/KioskRuntimeComponent/project.json b/KioskRuntimeComponent/project.json
+index 82d434e..39eed03 100644
+--- a/KioskRuntimeComponent/project.json
++++ b/KioskRuntimeComponent/project.json
+@@ -1,8 +1,6 @@
+ ﻿{
+   "dependencies": {
+-    "Microsoft.NETCore.UniversalWindowsPlatform": "5.1.0",
+-    "Plugin.MediaManager": "0.4.5",
+-    "Plugin.MediaManager.Forms": "0.4.5"
++    "Microsoft.NETCore.UniversalWindowsPlatform": "5.1.0"
+   },
+   "frameworks": {
+     "uap10.0.15063": {}
+diff --git a/ServiceHelpers/ServiceHelpers.csproj b/ServiceHelpers/ServiceHelpers.csproj
+index 97a6a91..9c3d6d8 100644
+--- a/ServiceHelpers/ServiceHelpers.csproj
++++ b/ServiceHelpers/ServiceHelpers.csproj
+@@ -63,15 +63,6 @@
+     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+       <HintPath>..\packages\Newtonsoft.Json.10.0.2\lib\portable-net45+win8+wpa81+wp8\Newtonsoft.Json.dll</HintPath>
+     </Reference>
+-    <Reference Include="Plugin.MediaManager, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+-      <HintPath>..\packages\Plugin.MediaManager.0.4.5\lib\portable-net45+wp8+wpa81+win8+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Plugin.MediaManager.dll</HintPath>
+-    </Reference>
+-    <Reference Include="Plugin.MediaManager.Abstractions, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+-      <HintPath>..\packages\Plugin.MediaManager.0.4.5\lib\portable-net45+wp8+wpa81+win8+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Plugin.MediaManager.Abstractions.dll</HintPath>
+-    </Reference>
+-    <Reference Include="Plugin.MediaManager.Forms, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+-      <HintPath>..\packages\Plugin.MediaManager.Forms.0.4.5\lib\portable-net45+wp8+wpa81+win8+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Plugin.MediaManager.Forms.dll</HintPath>
+-    </Reference>
+     <Reference Include="System.Net.Http.Extensions, Version=2.2.29.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+       <HintPath>..\packages\Microsoft.Net.Http.2.2.29\lib\portable-net45+win8\System.Net.Http.Extensions.dll</HintPath>
+       <Private>True</Private>
+diff --git a/ServiceHelpers/packages.config b/ServiceHelpers/packages.config
+index 7c1694d..e71af2d 100644
+--- a/ServiceHelpers/packages.config
++++ b/ServiceHelpers/packages.config
+@@ -10,8 +10,6 @@
+   <package id="Microsoft.ProjectOxford.Vision" version="1.0.372" targetFramework="portable45-net45+win8" />
+   <package id="NETStandard.Library" version="1.6.1" targetFramework="portable45-net45+win8" />
+   <package id="Newtonsoft.Json" version="10.0.2" targetFramework="portable45-net45+win8" />
+-  <package id="Plugin.MediaManager" version="0.4.5" targetFramework="portable45-net45+win8" />
+-  <package id="Plugin.MediaManager.Forms" version="0.4.5" targetFramework="portable45-net45+win8" />
+   <package id="runtime.native.System" version="4.3.0" targetFramework="portable45-net45+win8" />
+   <package id="System.Collections" version="4.3.0" targetFramework="portable45-net45+win8" />
+   <package id="System.Collections.Concurrent" version="4.3.0" targetFramework="portable45-net45+win8" />
+diff --git a/Views/RealTimeDemo.xaml b/Views/RealTimeDemo.xaml
+index 2a3b228..ac4d071 100644
+--- a/Views/RealTimeDemo.xaml
++++ b/Views/RealTimeDemo.xaml
+@@ -10,18 +10,18 @@
+     xmlns:mediaManager="using:Plugin.MediaManager"
+     mc:Ignorable="d">
+ 
+-        
++
+     <Grid x:Name="MainGrid" 
+-            EntranceNavigationTransitionInfo.IsTargetElement="True" Background="#FF262626">
++            EntranceNavigationTransitionInfo.IsTargetElement="True"  Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+ 
+         <Grid.RowDefinitions>
+             <RowDefinition Height="0.02*" />
+             <RowDefinition Height="auto" />
+-            <RowDefinition Height="0.01*" />            
++            <RowDefinition Height="0.01*" />
+             <RowDefinition />
+-            <RowDefinition Height="0.01*" />                            
+-            <RowDefinition Height="auto"/>                
+-            <RowDefinition Height="0.05*" />            
++            <RowDefinition Height="0.01*" />
++            <RowDefinition Height="auto"/>
++            <RowDefinition Height="0.05*" />
+         </Grid.RowDefinitions>
+ 
+         <Grid Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center">
+@@ -34,21 +34,25 @@
+         </Grid>
+ 
+         <StackPanel Grid.Row="1">
+-            <TextBlock x:Name="realtimeTitleControl" Text="Realtime Crowd Insights Sample" Foreground="White" HorizontalAlignment="Center" FontFamily="Segoe UI Light" Style="{StaticResource HeaderTextBlockStyle}"/>
++            <TextBlock x:Name="realtimeTitleControl" Text="幸福指數人流分析" Foreground="White" HorizontalAlignment="Center" FontFamily="Segoe UI Light" Style="{StaticResource HeaderTextBlockStyle}"/>
+             <TextBlock Text="Deriving realtime crowd insights from age, gender, emotion, face identification and unique face tracking" HorizontalAlignment="Center" FontFamily="Segoe UI Light"  Style="{StaticResource SubtitleTextBlockStyle}" FontStyle="Italic"/>
+         </StackPanel>
+ 
+-        <Grid Grid.Row="5" Height="165">
++        <Grid Grid.Row="5" Height="180">
+             <Grid.ColumnDefinitions>
+-                <ColumnDefinition Width="0.1*"/>
++                <ColumnDefinition Width="0.01*"/>
+                 <ColumnDefinition Width="300"/>
+-                <ColumnDefinition Width="240"/>
++                <ColumnDefinition Width="180"/>
++                <ColumnDefinition Width="450"/>
+                 <ColumnDefinition />
+-                <ColumnDefinition Width="0.1*"/>
++                
+             </Grid.ColumnDefinitions>
+             <ctl:AgeGenderDistributionControl x:Name="ageGenderDistributionControl" HeaderText="Demographics" SubHeaderText="At this hour (erased hourly)" SubHeaderVisibility="Visible" Grid.Column="1" />
+-            <ctl:OverallStatsControl x:Name="overallStatsControl" HeaderText="Total Faces" SubHeaderText="At this hour (erased hourly)" SubHeaderVisibility="Visible" Margin="24,0,24,0" Grid.Column="2" />
++            <ctl:OverallStatsControl x:Name="overallStatsControl" HeaderText="Total Faces" SubHeaderText="At this hour (erased hourly)" SubHeaderVisibility="Visible" Margin="10,0,10,0" Grid.Column="2" />
+             <ctl:EmotionResponseTimelineControl Grid.Column="3" x:Name="emotionDataTimelineControl"  />
++            <StackPanel Orientation="Vertical" Grid.Column="4"  HorizontalAlignment="Center" VerticalAlignment="Center">
++                <mediaManager:VideoSurface Height="250" Width="550" x:Name="VideoCanvas"/>
++            </StackPanel>
+         </Grid>
+ 
+         <Grid Grid.Row="3" x:Name="initializingUI" Visibility="Collapsed">
+diff --git a/Views/RealTimeDemo.xaml.cs b/Views/RealTimeDemo.xaml.cs
+index 51cdd47..15d7f2b 100644
+--- a/Views/RealTimeDemo.xaml.cs
++++ b/Views/RealTimeDemo.xaml.cs
+@@ -41,13 +41,12 @@ using System.Linq;
+ using System.Threading.Tasks;
+ using System.Xml.Serialization;
+ using Windows.Graphics.Imaging;
+-using Windows.UI.Core;
+ using Windows.UI.Popups;
+ using Windows.UI.ViewManagement;
+ using Windows.UI.Xaml;
+ using Windows.UI.Xaml.Controls;
+ using Windows.UI.Xaml.Navigation;
+-using Windows.UI.Xaml.Media;
++
+ using Plugin.MediaManager;
+ using Plugin.MediaManager.Abstractions.Enums;
+ using Plugin.MediaManager.Abstractions.EventArguments;
+@@ -77,16 +76,88 @@ namespace IntelligentKioskSample.Views
+         public RealTimeDemo()
+         {
+             this.InitializeComponent();
+-
++            
+             this.DataContext = this;
+ 
+             Window.Current.Activated += CurrentWindowActivationStateChanged;
+             this.cameraControl.SetRealTimeDataProvider(this);
+-            this.cameraControl.FilterOutSmallFaces = true;
+-            this.cameraControl.HideCameraControls();
++            this.cameraControl.FilterOutSmallFaces = false;
++            //this.cameraControl.HideCameraControls();
+             this.cameraControl.CameraAspectRatioChanged += CameraControl_CameraAspectRatioChanged;
++
++            CrossMediaManager.Current.PlayingChanged += OnPlayingChanged;
++            CrossMediaManager.Current.BufferingChanged += OnBufferingChanged;
++            CrossMediaManager.Current.StatusChanged += OnStatusChanged;
++            CrossMediaManager.Current.VideoPlayer.RenderSurface = VideoCanvas;
++            CrossMediaManager.Current.MediaFileChanged += CurrentOnMediaFileChanged;
++
++        }
++        private void OnBufferingChanged(object sender, BufferingChangedEventArgs bufferingChangedEventArgs)
++        {
++            var bufferingProgress = bufferingChangedEventArgs?.BufferProgress ?? 0;
++            var bufferingTime = bufferingChangedEventArgs?.BufferedTime;
++            //Debug.WriteLine($"buffering progress: {bufferingProgress}, buffering time: {bufferingTime}");
++        }
++
++        private void CurrentOnMediaFileChanged(object sender, MediaFileChangedEventArgs mediaFileChangedEventArgs)
++        {
++            var mediaFile = mediaFileChangedEventArgs.File;
++            //Title.Text = mediaFile.Metadata.Title ?? "";
++            //Artist.Text = mediaFile.Metadata.Artist ?? "";
++            //Album.Text = mediaFile.Metadata.Album ?? "";
++            switch (mediaFile.Type)
++            {
++                case MediaFileType.Audio:
++                    if (mediaFile.Metadata.AlbumArt != null)
++                    {
++                       // CoverArt.Source = (ImageSource)mediaFile.Metadata.AlbumArt;
++                    }
++                    break;
++                case MediaFileType.Video:
++                    break;
++            }
+         }
+ 
++        private async void OnStatusChanged(object sender, StatusChangedEventArgs e)
++        {
++            //await
++                //CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal,
++                //    () =>
++                await this.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, async () =>
++                {
++                        //PlayerState.Text = Enum.GetName(typeof(MediaPlayerStatus), e.Status);
++                        switch (CrossMediaManager.Current.Status)
++                        {
++                            case MediaPlayerStatus.Stopped:
++                                //Progress.Value = 0;
++                                break;
++                            case MediaPlayerStatus.Paused:
++                                break;
++                            case MediaPlayerStatus.Playing:
++                                //Progress.Maximum = 1;
++                                break;
++                            case MediaPlayerStatus.Buffering:
++                                break;
++                            case MediaPlayerStatus.Loading:
++                                break;
++                            case MediaPlayerStatus.Failed:
++                                break;
++                            default:
++                                throw new ArgumentOutOfRangeException();
++                        }
++                    });
++        }
++
++        private async void OnPlayingChanged(object sender, PlayingChangedEventArgs e)
++        {
++            //await
++            //    CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal,
++            //        () =>
++            await this.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
++            {
++                        //Progress.Value = e.Progress;
++                    });
++        }
+         private void CameraControl_CameraAspectRatioChanged(object sender, EventArgs e)
+         {
+             this.UpdateCameraHostSize();
+@@ -377,7 +448,14 @@ namespace IntelligentKioskSample.Views
+                             person = lastIdentifiedPersonSample.First().Item2.Person.PersonId.ToString();
+                             //realtimeTitleControl.Text = name;
+                             //doMarquee();
+-                
++
++                        }
++                        //VideoCanvas.Visibility = "Visible";
++                        if (CrossMediaManager.Current.Status != MediaPlayerStatus.Playing)
++                        {
++                            //CrossMediaManager.Current.VideoPlayer.;
++                        await CrossMediaManager.Current.Stop();
++                        await CrossMediaManager.Current.Play(@"http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4", MediaFileType.Video);
+                         }
+ 
+                         System.Diagnostics.Debug.WriteLine("Name: " + name);
+@@ -492,6 +570,7 @@ namespace IntelligentKioskSample.Views
+                 if (null != match.Item2)
+                 {
+                     realtimeTitleControl.Text = match.Item2.Person.Name.ToString();
++                     
+                 }
+                 return match.Item2;
+             }
